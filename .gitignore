@@ -1,0 +1,15 @@
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+serverless.original.yml
+.DS_Store
+.webpack
+.env*
+.eslintcache
+.nyc_output
+*.log
+.vscode
+*logs

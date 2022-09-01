@@ -1,0 +1,30 @@
+{
+  "name": "xumm-sample-app",
+  "version": "1.0.0",
+  "description": "Simple Poc app for xumm sdk integration'",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node src/index.js",
+    "eslint": "eslint .",
+    "lintfix": "eslint . --fix --cache",
+    "test": "cross-env IS_TESTING=true mocha --require tests/fixtures.test.js --require tests/teardown.test.js ./*/test/*.test.js --reporter mochawesome -options reportDir=testReports,reportFilename=automatedTestReports --timeout 250000 --exit --bail",
+    "logs": "git log --pretty='%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%x09 %C(Cyan)%an: %C(reset)%s'"
+  },
+  "keywords": [
+    "xumm",
+    "xrpl",
+    "sample"
+  ],
+  "author": "sachin-kiwi",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "xumm-sdk": "^1.3.5"
+  },
+  "devDependencies": {
+    "eslint": "^8.23.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}
