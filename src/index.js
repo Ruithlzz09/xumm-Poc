@@ -1,5 +1,5 @@
 const { XummSdk } = require('xumm-sdk')
-const { XUMM_API_KEY, XUMM_API_SECRET,isTestNet } = require('./config')
+const { XUMM_API_KEY, XUMM_API_SECRET,isTestNet, NOTIFICATION,EXTERNAL_ADDRESS,TOKEN_OFFER,XRPL_SERVER_URL } = require('./config')
 const { initXrplService,explorerUrlForTxn } = require('./utils')
 const request = require('./utils/payloads')
 const {searchTransaction} = require('./utils/transaction')
@@ -154,6 +154,9 @@ const acceptTokenOffer = async(client,info)=>{
     // User token is mentioned here
     console.log('User token:', result.application.issued_user_token)
     console.log(result.response)
+    if( XRPL_SERVER_URL !== result.environment_nodeuri){
+        console.log('User has submitted request to incorrect node')
+    }
 
 }
 
@@ -164,10 +167,13 @@ initXrplService().then(async client=>{
         console.log('To Connect with Nft-devnet',nftDevnetQR)
     }
     console.log('Sign In to get User token to enable push notification')
-    const info = await signIn()
-    console.log('Proceeding with payment')
-    info.offerId = '24CF3BDAB405686C88E61DC13A31B2B253338D78DE37922A0A3F662F1DE2A552'
-    info.address = 'r3nvis13AH3SHr7YA5KHLBZitDrMadYDo5'
+    let info={}
+    if (NOTIFICATION){
+        info = await signIn()
+    }
+    console.log('Proceeding with Main Request')
+    info.offerId = TOKEN_OFFER
+    info.address = EXTERNAL_ADDRESS
     // main(client,info)
     acceptTokenOffer(client,info)
 })
