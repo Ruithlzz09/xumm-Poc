@@ -8,10 +8,8 @@ const {searchTransaction} = require('./utils/transaction')
 const signIn = async() =>{
     const info = {}
     const Sdk = new XummSdk(XUMM_API_KEY, XUMM_API_SECRET)
-    const nftDevnetQR ='https://nnwqrfc.dlvr.cloud/XLS20-QR.png'
     const appInfo = await Sdk.ping()
     console.log(`App Name: ${appInfo.application.name}`)
-    console.log('To Connect with Nft-devnet',nftDevnetQR)
     const subscription = await Sdk.payload.createAndSubscribe(request.signIn, event =>{
         console.log('New payload event:', event.data)
         // The event data contains a property 'signed' (true or false), return
@@ -156,7 +154,7 @@ const acceptTokenOffer = async(client,info)=>{
     // User token is mentioned here
     console.log('User token:', result.application.issued_user_token)
     console.log(result.response)
-    if( XRPL_SERVER_URL !== result.environment_nodeuri){
+    if( XRPL_SERVER_URL !== result.response.environment_nodeuri){
         console.log('User has submitted request to incorrect node')
     }
 
@@ -164,9 +162,9 @@ const acceptTokenOffer = async(client,info)=>{
 
 
 initXrplService().then(async client=>{
-    console.log('Sign In to get User token to enable push notification')
     let info={}
     if (NOTIFICATION){
+        console.log('Sign In to get User token to enable push notification')
         info = await signIn()
     }
     console.log('Proceeding with Main Request')
