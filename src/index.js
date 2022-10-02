@@ -23,7 +23,7 @@ const signIn = async() =>{
     console.log(`QR Code link: ${refs.qr_png}`)
     console.log(`Xumm App link for sign: ${next?.always}`)
     console.log('Pushed Notification send:', pushed ? 'yes' : 'no')
-
+    await download_image(refs.qr_png)
     const resolveData = await subscription.resolved
     if (resolveData.signed === false) {
         console.log('The request is rejected')
@@ -170,7 +170,6 @@ initXrplService().then(async client=>{
     console.log('Proceeding with Main Request')
     info.offerId = TOKEN_OFFER
     info.address = EXTERNAL_ADDRESS
-    // main(client,info)
     acceptTokenOffer(client,info)
 })
 
