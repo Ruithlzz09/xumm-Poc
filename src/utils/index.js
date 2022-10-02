@@ -35,7 +35,7 @@ const initXrplService = async()=> {
 }
 
 const explorerUrlForTxn = (txid,IS_TESTNET) => {
-    const url = IS_TESTNET? 'https://xls20.bithomp.com/explorer/':'https://livenet.xrpl.org/transactions/'
+    const url = IS_TESTNET? 'https://dev.bithomp.com/explorer/':'https://livenet.xrpl.org/transactions/'
     return url + txid
 }
 
