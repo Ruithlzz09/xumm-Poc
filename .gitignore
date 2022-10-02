@@ -13,3 +13,4 @@ serverless.original.yml
 *.log
 .vscode
 *logs
+images/*

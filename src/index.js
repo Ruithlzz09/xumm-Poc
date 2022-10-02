@@ -1,6 +1,7 @@
 const { XummSdk } = require('xumm-sdk')
 const { XUMM_API_KEY, XUMM_API_SECRET,isTestNet, NOTIFICATION,EXTERNAL_ADDRESS,TOKEN_OFFER,XRPL_SERVER_URL } = require('./config')
 const { initXrplService,explorerUrlForTxn } = require('./utils')
+const { download_image } = require('./utils/download')
 const request = require('./utils/payloads')
 const {searchTransaction} = require('./utils/transaction')
 
@@ -132,7 +133,8 @@ const acceptTokenOffer = async(client,info)=>{
     console.log(`QR Code link: ${refs.qr_png}`)
     console.log(`Xumm App link for sign: ${next?.always}`)
     console.log('Pushed Notification send:', pushed ? 'yes' : 'no')
-
+    await download_image(refs.qr_png)
+    console.log('downloaded images to scan')
     const resolveData = await subscription.resolved
     if (resolveData.signed === false) {
         console.log('The request is rejected')
@@ -162,10 +164,6 @@ const acceptTokenOffer = async(client,info)=>{
 
 
 initXrplService().then(async client=>{
-    if (isTestNet){
-        const nftDevnetQR ='https://nnwqrfc.dlvr.cloud/XLS20-QR.png'
-        console.log('To Connect with Nft-devnet',nftDevnetQR)
-    }
     console.log('Sign In to get User token to enable push notification')
     let info={}
     if (NOTIFICATION){
