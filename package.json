@@ -5,9 +5,6 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "node src/index.js",
-    "eslint": "eslint .",
-    "lintfix": "eslint . --fix --cache",
-    "test": "cross-env IS_TESTING=true mocha --require tests/fixtures.test.js --require tests/teardown.test.js ./*/test/*.test.js --reporter mochawesome -options reportDir=testReports,reportFilename=automatedTestReports --timeout 250000 --exit --bail",
     "logs": "git log --pretty='%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%x09 %C(Cyan)%an: %C(reset)%s'"
   },
   "keywords": [
