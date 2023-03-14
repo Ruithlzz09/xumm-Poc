@@ -110,6 +110,10 @@ initXrplService().then(async client=>{
     info.address = EXTERNAL_ADDRESS
     info.tokenID = tokenID
     info.buyerAddress = BUYER_ADDRESS
-    createSellTokenOffer(client,info)
+    await createSellTokenOffer(client,info).catch(err=>{
+        console.log(err.stack)
+        process.exit(1)
+    })
+    process.exit(0)
 })
 

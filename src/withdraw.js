@@ -120,5 +120,9 @@ initXrplService().then(async client=>{
     console.log('Proceeding with Main Request')
     info.offerId = TOKEN_OFFER
     info.address = EXTERNAL_ADDRESS
-    acceptTokenOffer(client,info)
+    await acceptTokenOffer(client,info).catch(err=>{
+        console.log(err.stack)
+        process.exit(1)
+    })
+    process.exit(0)
 })
