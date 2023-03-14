@@ -32,8 +32,24 @@ const acceptSellOffer = (payload)=>{
   }
 }
 
+const createSellOffer = (payload)=>{
+  const {address='',pushEnabled=false,userToken='',buyerAddress='',tokenID:NFTokenID} = payload
+  return {
+      txjson: {
+      TransactionType: "NFTokenCreateOffer",
+      Account:address,
+      Destination:buyerAddress,
+      NFTokenID,
+      Flags:1,
+      Amount:'0'
+    },
+    ...(pushEnabled && userToken)
+  }
+}
+
 module.exports ={
     signIn,
     payment,
-    acceptSellOffer
+    acceptSellOffer,
+    createSellOffer
 }

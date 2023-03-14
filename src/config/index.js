@@ -11,5 +11,7 @@ module.exports = {
     isTestNet,
     NOTIFICATION:env.PUSH_NOTIFICATION === 'true',
     EXTERNAL_ADDRESS:env.EXTERNAL_ADDRESS,
-    TOKEN_OFFER:env.TOKEN_OFFER
+    TOKEN_OFFER:env.TOKEN_OFFER,
+    BUYER_ADDRESS:env.BUYER_ADDRESS,
+    tokenID :env.tokenID
 }
