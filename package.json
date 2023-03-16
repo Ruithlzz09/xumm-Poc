@@ -4,7 +4,7 @@
   "description": "Simple Poc app for xumm sdk integration'",
   "main": "src/index.js",
   "scripts": {
-    "dev": "node src/index.js",
+    "dev": "node src/app.js",
     "import": "node src/import.js",
     "withdraw": "node src/withdraw.js",
     "logs": "git log --pretty='%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset))%x09 %C(Cyan)%an: %C(reset)%s'"
