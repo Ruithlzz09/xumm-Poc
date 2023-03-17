@@ -128,7 +128,8 @@ const importNFT = async(client,info)=>{
         // console.log('Transaction Detail')
         console.log(`Explorer Link for import NFT i.e token sell offer created: ${resp.explorerUrl}`)
         // console.log(await searchTransaction(txid))
-        console.log(await fetchOffers(client,tokenID,true))
+        const offerList = await fetchOffers(client,tokenID,true)
+        console.log(offerList.nftSellOffers)
     }
     /**
      * Let's fetch the full payload end result, and get the issued
@@ -138,9 +139,9 @@ const importNFT = async(client,info)=>{
     // User token is mentioned here
     // console.log('User token:', result.application.issued_user_token)
     // console.log(result.response)
-    if( XRPL_SERVER_URL !== result.response.environment_nodeuri){
-        console.log('User has submitted request to incorrect node')
-    }
+    // if( XRPL_SERVER_URL !== result.response.environment_nodeuri){
+    //     console.log('User has submitted request to incorrect node')
+    // }
 
 }
 
@@ -195,9 +196,9 @@ const exportNFT = async(client,info)=>{
     // User token is mentioned here
     // console.log('User token:', result.application.issued_user_token)
     // console.log(result.response)
-    if( XRPL_SERVER_URL !== result.response.environment_nodeuri){
-        console.log('User has submitted request to incorrect node')
-    }
+    // if( XRPL_SERVER_URL !== result.response.environment_nodeuri){
+    //     console.log('User has submitted request to incorrect node')
+    // }
 
 }
 
