@@ -1,3 +1,5 @@
+const xrpl = require('xrpl')
+
 const signIn ={
   'txjson': {
     'TransactionType': 'SignIn'
@@ -21,11 +23,14 @@ const payment = (payload)=>{
 }
 
 const acceptSellOffer = (payload)=>{
-  const {address='',offerId='',pushEnabled=false,userToken=''} = payload
+  const {buyer='',offerId='',pushEnabled=false,userToken=''} = payload
+  if (!xrpl.isValidAddress(buyer)){
+    throw new Error('Please Check buyer address is invalid')
+  }
   return {
       'txjson': {
       'TransactionType': 'NFTokenAcceptOffer',
-      'Account':address,
+      'Account':buyer,
       'NFTokenSellOffer':offerId
     },
     ...(pushEnabled && userToken)
@@ -33,12 +38,15 @@ const acceptSellOffer = (payload)=>{
 }
 
 const createSellOffer = (payload)=>{
-  const {address='',pushEnabled=false,userToken='',buyerAddress='',tokenID:NFTokenID} = payload
+  const {seller='',pushEnabled=false,userToken='',buyer='',tokenID:NFTokenID} = payload
+  if (!xrpl.isValidAddress(seller) || !xrpl.isValidAddress(buyer)){
+    throw new Error('Please Check either seller or buyer address is invalid')
+  }
   return {
       txjson: {
       TransactionType: "NFTokenCreateOffer",
-      Account:address,
-      Destination:buyerAddress,
+      Account:seller,
+      Destination:buyer,
       NFTokenID,
       Flags:1,
       Amount:'0'
