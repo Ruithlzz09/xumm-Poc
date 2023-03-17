@@ -55,6 +55,40 @@ const signIn = async() =>{
     return info
 }
 
+
+async function getOffers(client,tokenId) {
+    let nftSellOffers = {}
+    try {
+        nftSellOffers = await client.request({
+            method: 'nft_sell_offers',
+            nft_id: tokenId,
+        })
+    } catch (err) {
+        console.log('info', '[getOffers]', `No sell offers for tokenId ${tokenId}`)
+    }
+    return nftSellOffers
+}
+const fetchOffers = async (client,tokenId,beautify=false) => {
+    let nftSellOffers = await getOffers(client,tokenId)
+    delete nftSellOffers.id
+    delete nftSellOffers.type
+    if (beautify){
+        nftSellOffers =
+        nftSellOffers?.result?.offers.map((x) => ({
+            Seller: x.owner,
+            Buyer: x.destination,
+            tokenOfferIndex: x.nft_offer_index
+        })) ?? []
+    }else{
+        nftSellOffers =
+        nftSellOffers?.result?.offers.map((x) => ({
+            owner: x.owner,
+            offerId: x.nft_offer_index,
+            destination: x.destination,
+        })) ?? []
+    }
+    return { nftSellOffers, tokenId }
+}
 const importNFT = async(client,info)=>{
     const Sdk = new XummSdk(XUMM_API_KEY, XUMM_API_SECRET)
     // Sdk ping contains info like application name, webhookurl
@@ -94,6 +128,7 @@ const importNFT = async(client,info)=>{
         // console.log('Transaction Detail')
         console.log(`Explorer Link for import NFT i.e token sell offer created: ${resp.explorerUrl}`)
         // console.log(await searchTransaction(txid))
+        console.log(await fetchOffers(client,tokenID,true))
     }
     /**
      * Let's fetch the full payload end result, and get the issued
@@ -185,28 +220,20 @@ function askQuestion(message) {
 }
 
 initXrplService().then(async client=>{
-    let info={}
+    const info={}
     try {
-        if (NOTIFICATION){
-            console.log('Sign In Application')
-            info = await signIn()
-        }
-        console.clear()
-        console.log('Sign In Completed successfully and now proceeding with Main Request')
-        while(true){
-            const choice = await askQuestion('Choose 1 for import and 2 for export and 3 for exit: ').then(resp=>parseInt(resp,10))
-            if (choice===1){
-                info.buyer = await askQuestion('Please Enter Buyer Address: ')
-                info.seller = await askQuestion('Please Enter Seller Address: ')
-                info.tokenID = await askQuestion('Please Enter NFT TokenID: ')
-                await importNFT(client,info).catch(err=>console.log(err.message))
-            } else if (choice === 2){
-                info.buyer = await askQuestion('Please Enter Buyer Address: ')
-                info.offerId = await askQuestion('Please Enter Offer ID: ')
-                await exportNFT(client,info).catch(err=>console.log(err.message))
-            } else if (choice === 3){
-                break
-            }
+        const choice = await askQuestion('Choose 1 for import and 2 for export and 3 for exit: ').then(resp=>parseInt(resp,10))
+        if (choice===1){
+            info.buyer = await askQuestion('Please Enter Buyer Address: ')
+            info.seller = await askQuestion('Please Enter Seller Address: ')
+            info.tokenID = await askQuestion('Please Enter NFT TokenID: ')
+            await importNFT(client,info).catch(err=>console.log(err.message))
+        } else if (choice === 2){
+            info.buyer = await askQuestion('Please Enter Buyer Address: ')
+            info.offerId = await askQuestion('Please Enter Offer ID: ')
+            await exportNFT(client,info).catch(err=>console.log(err.message))
+        } else{
+            console.log('Invalid option')
         }
     } catch (error) {
         console.log(error.message)
