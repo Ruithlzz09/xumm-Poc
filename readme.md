@@ -14,8 +14,8 @@ If you want to identify a user based on a signed transaction (without asking the
 Learning Material
  1. [XUMM SDK](https://dev.to/wietse/xumm-sdk-1-get-your-xumm-api-credentials-5c3i)
  2. [Xumm Integration](https://www.youtube.com/watch?v=skHP3nLNlEQ)
- 3. [Payload] (https://xumm.readme.io/docs/payload-workflow)
- 4. [Payload-transaction] (https://xumm.readme.io/docs/payload-transaction-data)
+ 3. [Payload](https://xumm.readme.io/docs/payload-workflow)
+ 4. [Payload-transaction](https://xumm.readme.io/docs/payload-transaction-data)
  5. [Register App for xumm credentials](https://xumm.readme.io/docs/register-your-app)
  6. [To Create new funded account](https://xrpl.org/xrp-testnet-faucet.html)
  7. [Different Networks](https://xrpl.org/parallel-networks.html)
